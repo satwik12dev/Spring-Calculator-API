@@ -2,49 +2,72 @@ package com.example.fullstack1.controller;
 
 import com.example.fullstack1.model.Response;
 import org.springframework.web.bind.annotation.*;
+import com.example.fullstack1.model.squareResponse;
 
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/api")
 public class HelloController {
-
     @GetMapping("/add")
     public Response add(@RequestParam double a, @RequestParam double b){
-        double result = a + b;
-        return new Response(a,b,result,"Addition successful");
+        try {
+            double result = a + b;
+            return new Response(a,b,result,"Addition successful");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @GetMapping("/sub")
     public Response subtract(@RequestParam double a, @RequestParam double b){
-        double result = a - b;
-        return new Response(a,b,result,"Subtraction successful");
+        try {
+            double result = a - b;
+            return new Response(a,b,result,"Subtraction successful");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @GetMapping("/mul")
     public Response multiply(@RequestParam double a, @RequestParam double b){
-        double result = a * b;
-        return new Response(a,b,result,"Multiplication successful");
+        try {
+            double result = a * b;
+            return new Response(a,b,result,"Multiplication successful");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @GetMapping("/div")
     public Response divide(@RequestParam double a, @RequestParam double b){
-
         if(b == 0){
             throw new ArithmeticException("Cannot divide by zero");
         }
-
         double result = a / b;
         return new Response(a,b,result,"Division successful");
     }
 
     @GetMapping("/mod")
     public Response modulo(@RequestParam double a, @RequestParam double b){
-
         if(b == 0){
             throw new ArithmeticException("Cannot modulo by zero");
         }
-
         double result = a % b;
         return new Response(a,b,result,"Modulo successful");
+    }
+
+    @GetMapping("/floor")
+    public Response floor(@RequestParam double a, @RequestParam double b) {
+        if (b == 0) {
+            throw new ArithmeticException("Cannot divide by zero");
+        }
+        double result = Math.floor(a / b);
+        return new Response(a, b, result, "Floor division successful");
+    }
+
+    @GetMapping("/square")
+    public squareResponse square(@RequestParam double a){
+        double res = a*a;
+        return new squareResponse(a,res,"Square Completed");
     }
 }
